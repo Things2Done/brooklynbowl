@@ -1,0 +1,11 @@
+Model Information:
+* title:	Game Ready Arm Model
+* source:	https://sketchfab.com/3d-models/game-ready-arm-model-29fb02e6fcd54b5986ff92d2c255975a
+* author:	erkamenescol (https://sketchfab.com/erkamenescol)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Game Ready Arm Model" (https://sketchfab.com/3d-models/game-ready-arm-model-29fb02e6fcd54b5986ff92d2c255975a) by erkamenescol (https://sketchfab.com/erkamenescol) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

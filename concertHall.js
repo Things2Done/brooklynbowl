@@ -36,7 +36,7 @@ export const danceFloor = () => {
 
     
     const wall = new BoxGeometry(100, .2, 80)
-       const wallMaterial = new MeshBasicMaterial({ 
+       const wallMaterial = new MeshStandardMaterial({ 
         map: color,
         displacementMap: displace,
         normalMap: normal,
@@ -56,7 +56,7 @@ export const stageSide = () => {
     const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
 
     const wall = new BoxGeometry(2, 80, 130)
-       const wallMaterial = new MeshBasicMaterial({ 
+       const wallMaterial = new MeshStandardMaterial({ 
         map: color,
         displacementMap: displace,
         normalMap: normal,
@@ -161,7 +161,7 @@ export const keyboard = () => {
 export const trumpet = () => {
     const texture = loader.load('./photos/trumpet1.jpg')
 
-    const wall = new BoxGeometry(25, 20, 2)
+    const wall = new BoxGeometry(25, 20, 20)
        const wallMaterial = new MeshBasicMaterial({ 
         map: texture
     })
