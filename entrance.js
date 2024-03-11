@@ -256,3 +256,43 @@ export const curtainModel = () => {
         })
 
     }
+
+    export const curtainModel2 = () => {
+        return new Promise((resolve, reject) => {
+    
+            // const texture = , (texture) => {
+                //using model loader we're going to async load a 3d model from path
+                modelLoader.load(
+                    //template - replace model link below
+                    // './models/Curtains/source/curtains-animated-512.glb',
+                    './models/curtains.glb',
+                    //this function below is called if our model is loaded correctly
+                    (gltf) => {
+                        const modelMixer = new AnimationMixer(gltf.scene)
+                        const newMaterial = new MeshPhongMaterial({
+                            map: loader.load('./models/Curtains/textures/A23DTEX_Albedo_1.jpeg'),
+                            // roughnessMap: loader.load('./models/Curtains/textures/A23DTEX_Roughness_2@channels=G.png'),
+                            // normalMap: loader.load('Metal034_1K_NormalGL_3.jpeg')
+                        })
+                        gltf.scene.traverse((child) => {
+                            if (child.isMesh) {
+                                child.material = newMaterial
+                            }
+                        })
+    
+                        gltf.animations.forEach((clip) => {
+                            modelMixer.clipAction(clip).play()
+                        })
+                        resolve({ scene: gltf.scene, mixer: modelMixer })
+                    },
+                    undefined,
+                    (error) => {
+                        console.error(error)
+                        reject(error)
+                    }
+                )
+    
+            })
+    
+        }
+    

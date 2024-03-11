@@ -1,13 +1,13 @@
 import './style.css'
 import * as THREE from 'three'
-import { frontWall, sideWall, blackFrontWall, blackSideWall, pillar, signVert, signHor, ground, entryGround, curtainModel, } from './entrance'
+import { frontWall, sideWall, blackFrontWall, blackSideWall, pillar, signVert, signHor, ground, entryGround, curtainModel, curtainModel2 } from './entrance'
 import { addLight, ambientLight } from './addLights'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Model from './Model'
-import { danceFloor, stageSide, stageSide2, bowlingAlley, drummer, guitar, keyboard, trumpet } from './concertHall'
+import { danceFloor, stageFloor, stageLip, stageSide, stageSide2, ceiling, backStage, backWall, farWall, discoBall,drummer, guitar, keyboard, trumpet } from './concertHall'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
-import {WheelAdaptor} from 'three-story-controls'
+import { WheelAdaptor } from 'three-story-controls'
 import gsap from 'gsap'
 
 const renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -22,15 +22,22 @@ const clock = new THREE.Clock()
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 controls.dampingFactor = 0.09
-// controls.target.set (-100,-40,-4)
+controls.target.set (-100,-240,-4)
 // controls.target.set(0, 0, 4)
-controls.enabled = false
-controls.enablePan = false
-controls.enableZoom = false
+// controls.enabled = false
+// controls.enablePan = false
+// controls.enableZoom = false
 const scene = new THREE.Scene()
 const meshes = {}
 const lights = {}
 const mixers = []
+
+//audio
+const listener = new THREE.AudioListener()
+camera.add(listener)
+const hartswickMusic = new THREE.PositionalAudio(listener)
+const sound2 = new THREE.PositionalAudio(listener)
+const audioLoader = new THREE.AudioLoader()
 
 
 init()
@@ -39,22 +46,22 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight)
   document.body.appendChild(renderer.domElement)
 
-  //bowling Alley Model
-  bowlingAlley().then(({ scene: bowlingScene, mixer: bowlingMixer }) => {
-    bowlingScene.position.set(-100, -3, -20)
-    bowlingScene.scale.set(20, 20, 2)
-    scene.add(bowlingScene)
-    mixers.push(bowlingMixer)
-  }).catch((error) => {
-    console.log('failed to load model', error)
-  })
-
   curtainModel().then(({ scene: curtainScene, mixer: curtainMixer }) => {
     curtainScene.position.set(2, -2, -15)
     curtainScene.scale.set(5, 1, 1.8)
     curtainScene.rotation.set(0, 30, 0)
     scene.add(curtainScene)
     mixers.push(curtainMixer)
+  }).catch((error) => {
+    console.log('failed to load model', error)
+  })
+
+  curtainModel2().then(({ scene: curtainScene2, mixer: curtainMixer2 }) => {
+    curtainScene2.position.set(2, -2, -8)
+    curtainScene2.scale.set(5, 1, 1.8)
+    curtainScene2.rotation.set(0, 30, 0)
+    scene.add(curtainScene2)
+    mixers.push(curtainMixer2)
   }).catch((error) => {
     console.log('failed to load model', error)
   })
@@ -67,16 +74,62 @@ function init() {
     scale: new THREE.Vector3(.005, .005, .005),
   })
   arm.init()
-  arm.position.set(3, 3, 3)
+  arm.position.set(2, -2, -10)
+
 
   const stamp = new Model({
     scene: scene, meshes: meshes, name: 'arm', url: './models/stamp/scene.gltf',
     map: './models/stamp/textures/defaultMat_baseColor.png',
     roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
-    scale: new THREE.Vector3(.05, .05, .05),
+    scale: new THREE.Vector3(.009, .009, .009),
   })
   stamp.init()
-  stamp.position.set(3, 3, 3)
+  stamp.position.set(2, 1, -10)
+
+  // const stageCurtain = new Model({
+  //   scene: scene, meshes: meshes, name: 'stageCurtain', url: './models/curtains.glb',
+  //   // map: './models/StageCurtain/textures/Material.001_baseColor.png',
+  //   // roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
+  //   scale: new THREE.Vector3(10, 10, 10),
+  //   // rotation:
+  //   })
+  // stageCurtain.init()
+
+  // stageCurtain.rotation.x = Math.PI/2
+  // stageCurtain.rotation.y = 0
+  // stageCurtain.rotation.z = 0
+
+
+  // const bowling = new Model({
+  //   scene: scene, meshes: meshes, name: 'bowling', url: './models/bowling/scene.gltf',
+  //   // map: './models/arm/textures/material_0_baseColor.png',
+  //   // roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
+  //   // normalMap: './models/arm/textures/defaultMat_metallicRoughness.png',
+  //   scale: new THREE.Vector3(10, 3, 10),
+  // })
+  // bowling.init()
+  // bowling.position.set(-50, -20, -65)
+
+  const bowling2 = new Model({
+    scene: scene, meshes: meshes, name: 'bowling2', url: './models/bowling2/scene.gltf',
+    // map: './models/arm/textures/material_0_baseColor.png',
+    // roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
+    // normalMap: './models/arm/textures/defaultMat_metallicRoughness.png',
+    scale: new THREE.Vector3(10, 3, 15),
+    rotation: new THREE.Vector3(0,Math.PI,0)
+  })
+  bowling2.init()
+  bowling2.position.set(90, -250, 150)
+
+  const bar = new Model({
+    scene: scene, meshes: meshes, name: 'bar', url: './models/bar/scene.gltf',
+    // map: './models/arm/textures/material_0_baseColor.png',
+    // roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
+    // normalMap: './models/arm/textures/defaultMat_metallicRoughness.png',
+    scale: new THREE.Vector3(.4, .3, .3),
+  })
+  bar.init()
+  bar.position.set(-100, -260, 170)
 
   meshes.frontWall = frontWall()
   meshes.sideWall = sideWall()
@@ -89,16 +142,27 @@ function init() {
   meshes.entryGround = entryGround()
 
   meshes.danceFloor = danceFloor()
+  meshes.stageFloor = stageFloor()
+  meshes.stageLip = stageLip()
   meshes.drummer = drummer()
   meshes.guitar = guitar()
   meshes.keyboard = keyboard()
   meshes.trumpet = trumpet()
   meshes.stageSide = stageSide()
   meshes.stageSide2 = stageSide2()
+  meshes.ceiling = ceiling()
+  meshes.farWall = farWall()
+  meshes.backWall = backWall()
+  meshes.backStage = backStage()
+  meshes.discoBall = discoBall()
 
 
   lights.default = addLight()
   lights.ambientLight = ambientLight()
+  
+
+  meshes.trumpet.add(hartswickMusic)
+
 
   scene.add(lights.default)
   scene.add(lights.ambientLight)
@@ -114,63 +178,109 @@ function init() {
 
 
   scene.add(meshes.danceFloor)
+  scene.add(meshes.stageFloor)
   scene.add(meshes.stageSide)
-  // scene.add(meshes.stageSide2)
+  scene.add(meshes.stageLip)
+  scene.add(meshes.stageSide2)
+  scene.add(meshes.ceiling)
+  scene.add(meshes.farWall)
+  scene.add(meshes.backWall)
+  scene.add(meshes.backStage)
+  scene.add(meshes.discoBall)
+
+
   scene.add(meshes.drummer)
   scene.add(meshes.guitar)
   scene.add(meshes.keyboard)
   scene.add(meshes.trumpet)
 
-  camera.position.set(1.5, 0, 15)
-  // camera.position.set(-100, -50, 35)
+  window.addEventListener('click', () => {
+    hartswickMusic.play()
+  })
+
+  // camera.position.set(1.5, 0, 15)
+  camera.position.set(-100, -250, 135)
   // instances()
 
-  let counter = 0
-  let target = new THREE.Vector3()
-  const wheelAdaptor = new WheelAdaptor({ type: 'discrete' })
-  wheelAdaptor.connect()
-  wheelAdaptor.addEventListener('trigger', (event) => {
-      counter++
-      if (counter == 1) {
-          gsap.to(camera.position, {
-              z: -5,
-              duration: 3,
-              ease: 'power1.inOut',
-              }),
-            gsap.to(target, {x: 2,y: 0,z: -18,
-              onComplete:camera.lookAt(target)
-            })
-          
-      } else if (counter == 4) {
-          const cover = document.querySelector('.cover')
-          gsap.to(cover, {
-              opacity: 1,
-              duration: 1,
-              ease: 'power1.in',
-          })
-          gsap.to(camera.position, {
-              x: -100,
-              y: -50,
-              z: 35,
-              delay: 2,
-          })
-          gsap.to(cover, {
-              opacity: 0,
-              duration: 1,
-              ease: 'power1.in',
-              delay: 3,
-              onComplete: () => {
-                  controls.enabled = true
-              },
-          })
-      }
+  // let counter = 0
+  // let target = new THREE.Vector3()
+  // const wheelAdaptor = new WheelAdaptor({ type: 'discrete' })
+  // wheelAdaptor.connect()
+  // wheelAdaptor.addEventListener('trigger', (event) => {
+  //   counter++
+  //   if (counter == 1) {
+  //     gsap.to(camera.position, {
+  //       z: -5,
+  //       duration: 3,
+  //       ease: 'power1.inOut',
+  //     }),
+  //       gsap.to(target, {
+  //         x: 0, y: 0, z: -10,
+  //         duration: 1.2,
+  //         ease: 'power1.inOut',
+  //         onComplete: () => {
+  //           camera.lookAt(target)
+  //           controls.target.copy(target)
+  //         },
+  //       })
 
-      console.log(counter)
-  })
+  //   } else if (counter == 4) {
+  //     const cover = document.querySelector('.cover')
+  //     const otherShows = document.querySelector('#otherShows')
+  //     gsap.to(cover, {
+  //       opacity: 1,
+  //       duration: 1,
+  //       ease: 'power1.in',
+  //     })
+  //     gsap.to(camera.position, {
+  //       x: -100,
+  //       y: -250,
+  //       z: 55,
+  //       delay: 2,
+  //     })
+  //     gsap.to(target, {
+  //       x: -100, y: -250, z: 15,
+  //       duration: 1.2,
+  //       ease: 'power1.inOut',
+  //       onComplete: () => {
+  //         camera.lookAt(target)
+  //         controls.target.copy(target)
+  //       },
+  //     })
+  //     gsap.to(cover, {
+  //       opacity: 0,
+  //       duration: 1,
+  //       ease: 'power1.in',
+  //       delay: 3,
+  //       onComplete: () => {
+  //         controls.enabled = true
+  //       },
+  //     })
+  //     gsap.to(otherShows,{
+  //       display: 'block',
+  //       opacity: 1,
+  //       delay: 10,
+  //       ease: 'power1.inOut'
+  //     })
+  //   }
+
+  //   console.log(counter)
+  // })
   createVerticalText()
   fonts()
+  initAudio()
   resize()
   animate()
+}
+
+function initAudio() {
+  audioLoader.load('./sound/hartswickMusic.mp4', function (buffer) {
+    hartswickMusic.setBuffer(buffer)
+    hartswickMusic.setRefDistance(300)
+    hartswickMusic.setRolloffFactor(5)
+    hartswickMusic.setMaxDistance(20)
+    hartswickMusic.setDistanceModel('exponential')
+  })
 }
 
 function fonts() {
@@ -250,6 +360,7 @@ function animate() {
     mixer.update(delta)
   }
   controls.update()
+
   // meshes.frontWall.rotation.x += 0.01
   // // meshes.frontWall.rotation.z += 0.01
   // meshes.pillar.rotation.y += 0.04
@@ -259,6 +370,8 @@ function animate() {
   meshes.keyboard
   meshes.trumpet.rotation.y += 0.009
   // meshes.trumpet.rotation.x += 0.009
+  meshes.discoBall.rotation.y += 0.009
+  
   renderer.render(scene, camera)
 }
 

@@ -1,5 +1,6 @@
 import {
     BoxGeometry,
+    SphereGeometry,
     MeshBasicMaterial,
     MeshStandardMaterial,
     Mesh,
@@ -15,28 +16,15 @@ const loader = new TextureLoader()
 const modelLoader = new GLTFLoader()
 
 export const danceFloor = () => {
-    // const color = loader.load('./wood/Wood_020_basecolor.jpg')
-    // const displace = loader.load('./wood/Wood_020_height.png')
-    // const normal = loader.load('./wood/Wood_Barrel_Top_001_normal.jpg')
-    // const roughness = loader.load('./wood/Wood_020_roughness.jpg')
-    // const occ = loader.load('./wood/Wood_020_ambientOcclusion.jpg')
-
-
-    // const color = loader.load('./wood/Wood_Barrel_Top_001_basecolor.jpg')
-    // const displace = loader.load('./wood/Wood_Barrel_Top_001_height.png')
-    // const normal = loader.load('./wood/Wood_Barrel_Top_001_normal.jpg')
-    // const roughness = loader.load('./wood/Wood_Barrel_Top_001_opacity.jpg')
-    // const occ = loader.load('./wood/Wood_Barrel_Top_001_ambientOcclusion.jpg')
-
     const color = loader.load('./wood/Wood_Floor_012_basecolor.jpg')
     const displace = loader.load('./wood/Wood_012_height.png')
     const normal = loader.load('./wood/Wood_Floor_012_normal.jpg')
     const roughness = loader.load('./wood/Wood_Floor_012_roughness.jpg')
     const occ = loader.load('./wood/Wood_Floor_012_ambientOcclusion.jpg')
 
-    
-    const wall = new BoxGeometry(100, .2, 80)
-       const wallMaterial = new MeshStandardMaterial({ 
+
+    const wall = new BoxGeometry(130, .2, 300)
+    const wallMaterial = new MeshStandardMaterial({
         map: color,
         displacementMap: displace,
         normalMap: normal,
@@ -44,7 +32,41 @@ export const danceFloor = () => {
         aoMap: occ,
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(-100, -60, -40)
+    wallMesh.position.set(-100, -280, 55)
+    return wallMesh
+}
+
+export const stageLip = () => {
+    // const logo = loader.load('/photos/BkBowlLogo.png')
+
+    const wall = new BoxGeometry(130, 20, 2)
+    const wallMaterial = new MeshStandardMaterial({
+        color: 0x000000,
+        // map:logo,
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(-100, -270, 0)
+    return wallMesh
+}
+
+export const stageFloor = () => {
+    const color = loader.load('./wood/Wood_Floor_012_basecolor.jpg')
+    const displace = loader.load('./wood/Wood_012_height.png')
+    const normal = loader.load('./wood/Wood_Floor_012_normal.jpg')
+    const roughness = loader.load('./wood/Wood_Floor_012_roughness.jpg')
+    const occ = loader.load('./wood/Wood_Floor_012_ambientOcclusion.jpg')
+
+
+    const wall = new BoxGeometry(130, .2, 100)
+    const wallMaterial = new MeshStandardMaterial({
+        map: color,
+        displacementMap: displace,
+        normalMap: normal,
+        roughnessMap: roughness,
+        aoMap: occ,
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(-100, -260, -50)
     return wallMesh
 }
 
@@ -55,8 +77,34 @@ export const stageSide = () => {
     const roughness = loader.load('Brick_Wall_019_roughness.jpg')
     const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
 
-    const wall = new BoxGeometry(2, 80, 130)
-       const wallMaterial = new MeshStandardMaterial({ 
+    const wall = new BoxGeometry(5, 130, 330)
+    const wallMaterial = new MeshStandardMaterial({
+        map: color,
+        normalMap: normal,
+        roughnessMap: roughness,
+        aoMap: occ,
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(-165, -220, 55)
+    return wallMesh
+}
+
+
+export const stageSide2 = () => {
+    // const color = loader.load('Brick_Wall_019_basecolor.jpg')
+    // const displace = loader.load('Brick_Wall_019_height.png')
+    // const normal = loader.load('Brick_Wall_019_normal.jpg')
+    // const roughness = loader.load('Brick_Wall_019_roughness.jpg')
+    // const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
+
+    const color = loader.load('./wood/Wood_Floor_012_basecolor.jpg')
+    const displace = loader.load('./wood/Wood_012_height.png')
+    const normal = loader.load('./wood/Wood_Floor_012_normal.jpg')
+    const roughness = loader.load('./wood/Wood_Floor_012_roughness.jpg')
+    const occ = loader.load('./wood/Wood_Floor_012_ambientOcclusion.jpg')
+
+    const wall = new BoxGeometry(2, 35, 330)
+    const wallMaterial = new MeshBasicMaterial({
         map: color,
         displacementMap: displace,
         normalMap: normal,
@@ -64,72 +112,126 @@ export const stageSide = () => {
         aoMap: occ,
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(-150, -20, -65)
+    wallMesh.position.set(-35, -265, 55)
     return wallMesh
 }
 
+export const ceiling = () => {
+    const color = loader.load('./Textures/ceiling/Tiles_011_COLOR.jpg')
+    const displace = loader.load('./Textures/ceiling/Tiles_011_DISP.png')
+    const normal = loader.load('./Textures/ceiling/Tiles_011_NORM.jpg')
+    const roughness = loader.load('./Textures/ceiling/Tiles_011_ROUGH.jpg')
+    const occ = loader.load('./Textures/ceiling/Tiles_011_OCC.jpg')
 
-export const stageSide2 = () => {
+
+    const wall = new BoxGeometry(400, .2, 400)
+    const wallMaterial = new MeshStandardMaterial({
+        map: color,
+        displacementMap: displace,
+        normalMap: normal,
+        roughnessMap: roughness,
+        aoMap: occ,
+        // color: 0x000000
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(0, -160, 55)
+    return wallMesh
+}
+
+export const backStage = () => {
     const color = loader.load('Brick_Wall_019_basecolor.jpg')
     const displace = loader.load('Brick_Wall_019_height.png')
     const normal = loader.load('Brick_Wall_019_normal.jpg')
     const roughness = loader.load('Brick_Wall_019_roughness.jpg')
     const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
 
-    const wall = new BoxGeometry(2, 80, 130)
-       const wallMaterial = new MeshBasicMaterial({ 
+    const wall = new BoxGeometry(500, 130, 5)
+    const wallMaterial = new MeshStandardMaterial({
         map: color,
-        displacementMap: displace,
         normalMap: normal,
         roughnessMap: roughness,
         aoMap: occ,
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(-50, -20, -65)
+    wallMesh.position.set(-55, -220, -97)
     return wallMesh
 }
 
-export const bowlingAlley = () => {
-    return new Promise((resolve, reject) => {
-        //using model loader we're going to async load a 3d model from path
-        modelLoader.load(
-            //template - replace model link below
-            '/Bowling-Alley.glb',
-            //this function below is called if our model is loaded correctly
-            (gltf) => {
-                const modelMixer = new AnimationMixer(gltf.scene)
-                const newMaterial = new MeshPhongMaterial({
-                    // matcap: tLoader.load('/wood/Wood_020_height.png')
-                })
-                gltf.scene.traverse((child) => {
-                    if (child.isMesh) {
-                        child.material = newMaterial
-                    }
-                })
+export const backWall = () => {
+    const color = loader.load('./Textures/metal/Metal_006_basecolor.jpg')
+    const displace = loader.load('./Textures/metal/Metal_006_height.png')
+    const normal = loader.load('./Textures/metal/Metal_006_normal.jpg')
+    const roughness = loader.load('./Textures/metal/Metal_006_roughness.jpg')
+    const occ = loader.load('./Textures/metal/Metal_006_ambientOcclusion.jpg')
 
-                gltf.animations.forEach((clip) => {
-                    modelMixer.clipAction(clip).play()
-                })
-                resolve({ scene: gltf.scene, mixer: modelMixer })
-            },
-            undefined,
-            (error) => {
-                console.error(error)
-                reject(error)
-            }
-        )
+    // const color = loader.load('Brick_Wall_019_basecolor.jpg')
+    // const displace = loader.load('Brick_Wall_019_height.png')
+    // const normal = loader.load('Brick_Wall_019_normal.jpg')
+    // const roughness = loader.load('Brick_Wall_019_roughness.jpg')
+    // const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
+
+    const wall = new BoxGeometry(500, 150, 5)
+    const wallMaterial = new MeshStandardMaterial({
+        map: color,
+        normalMap: normal,
+        roughnessMap: roughness,
+        aoMap: occ,
     })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(0,-230,210)
+    return wallMesh
 }
+
+
+export const farWall = () => {
+    const color = loader.load('Brick_Wall_019_basecolor.jpg')
+    const displace = loader.load('Brick_Wall_019_height.png')
+    const normal = loader.load('Brick_Wall_019_normal.jpg')
+    const roughness = loader.load('Brick_Wall_019_roughness.jpg')
+    const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
+
+    const wall = new BoxGeometry(5, 130, 340)
+    const wallMaterial = new MeshStandardMaterial({
+        map: color,
+        normalMap: normal,
+        roughnessMap: roughness,
+        aoMap: occ,
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(194, -220, 55)
+    return wallMesh
+}
+
+export const discoBall = () => {
+    const color = loader.load('./Textures/discoBall/Disco_Ball_001_basecolor.jpg')
+    const displace = loader.load('./Textures/discoBall/Disco_Ball_001_height.png')
+    const normal = loader.load('./Textures/discoBall/Disco_Ball_001_normal.jpg')
+    const roughness = loader.load('./Textures/discoBall/Disco_Ball_001_roughness.jpg')
+    const occ = loader.load('./Textures/discoBall/Disco_Ball_001_ambientOcclusion.jpg')
+
+    const wall = new SphereGeometry(10, 32, 16, 0, Math.PI * 2, 0, Math.PI)
+    const wallMaterial = new MeshBasicMaterial({
+        map: color,
+        normalMap: normal,
+        roughnessMap: roughness,
+        aoMap: occ,
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(-100, -170, 50)
+    return wallMesh
+}
+
+
 
 export const drummer = () => {
     const texture = loader.load('./photos/drummer.jpg')
 
     const wall = new BoxGeometry(30, 20, 2)
-       const wallMaterial = new MeshBasicMaterial({ 
+    const wallMaterial = new MeshBasicMaterial({
         map: texture
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(-100, -50, -60)
+    wallMesh.position.set(-100, -250, -60)
     return wallMesh
 }
 
@@ -137,11 +239,11 @@ export const guitar = () => {
     const texture = loader.load('./photos/guitar2.jpg')
 
     const wall = new BoxGeometry(15, 15, 2)
-       const wallMaterial = new MeshBasicMaterial({ 
+    const wallMaterial = new MeshBasicMaterial({
         map: texture
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(-80, -52, -25)
+    wallMesh.position.set(-80, -252, -25)
     return wallMesh
 }
 
@@ -149,12 +251,12 @@ export const keyboard = () => {
     const texture = loader.load('./photos/keyboard.jpg')
 
     const wall = new BoxGeometry(15, 10, 2)
-       const wallMaterial = new MeshBasicMaterial({ 
+    const wallMaterial = new MeshBasicMaterial({
         map: texture
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(-65, -55, -8)
-    wallMesh.rotation.set(0,40,0)
+    wallMesh.position.set(-65, -255, -8)
+    wallMesh.rotation.set(0, 40, 0)
     return wallMesh
 }
 
@@ -162,11 +264,11 @@ export const trumpet = () => {
     const texture = loader.load('./photos/trumpet1.jpg')
 
     const wall = new BoxGeometry(25, 20, 20)
-       const wallMaterial = new MeshBasicMaterial({ 
+    const wallMaterial = new MeshBasicMaterial({
         map: texture
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(-125, -50, -12)
-    wallMesh.rotation.set(0,-40,0)
+    wallMesh.position.set(-125, -250, -12)
+    wallMesh.rotation.set(0, -40, 0)
     return wallMesh
 }

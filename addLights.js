@@ -11,3 +11,4 @@ export const ambientLight = () => {
     light.position.set(-5, 3, 0)
     return light
 }
+

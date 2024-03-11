@@ -1,0 +1,11 @@
+Model Information:
+* title:	S03C03 Bowling Alley
+* source:	https://sketchfab.com/3d-models/s03c03-bowling-alley-ffcc7acc26fb4d72847e36cd5c85be46
+* author:	thequinneffect (https://sketchfab.com/thequinneffect)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "S03C03 Bowling Alley" (https://sketchfab.com/3d-models/s03c03-bowling-alley-ffcc7acc26fb4d72847e36cd5c85be46) by thequinneffect (https://sketchfab.com/thequinneffect) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

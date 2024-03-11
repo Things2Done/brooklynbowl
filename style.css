@@ -1,8 +1,14 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow: hidden;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+canvas {
+	position: fixed;
+	top: 0;
+	z-index: -3;
 }
 
 .cover {
@@ -14,5 +20,14 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-  pointer-events: none;
+	pointer-events: none;
+}
+
+
+
+#otherShows{
+	position: fixed;
+	bottom: 200px;
+	right: 200px;
+	display: none;
 }
