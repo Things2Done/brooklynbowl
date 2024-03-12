@@ -206,7 +206,7 @@ export const entryGround = () => {
     const occ = loader.load('/Textures/Concrete/Concrete_Panels_001_OCC.jpg')
 
     const box = new BoxGeometry(4, .2, 10)
-    const boxMaterial = new MeshBasicMaterial({
+    const boxMaterial = new MeshPhysicalMaterial({
 
         map: color,
         normalMap: normal,

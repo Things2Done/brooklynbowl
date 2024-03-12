@@ -103,8 +103,8 @@ export const stageSide2 = () => {
     const roughness = loader.load('./wood/Wood_Floor_012_roughness.jpg')
     const occ = loader.load('./wood/Wood_Floor_012_ambientOcclusion.jpg')
 
-    const wall = new BoxGeometry(2, 35, 330)
-    const wallMaterial = new MeshBasicMaterial({
+    const wall = new BoxGeometry(2, 33, 330)
+    const wallMaterial = new MeshPhysicalMaterial({
         map: color,
         displacementMap: displace,
         normalMap: normal,

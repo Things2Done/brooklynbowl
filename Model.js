@@ -26,6 +26,7 @@ export default class Model {
 		this.loader.setDRACOLoader(this.dracoLoader)
 		this.textureLoader = new TextureLoader()
 		this.animations = obj.animationState || false
+		this.rotation = obj.rotation || undefined
 		this.replaceMaterials = obj.replace || false
 		this.defaultMatcap = obj.replaceURL
 			? this.textureLoader.load(`${obj.replaceURL}`)
@@ -69,6 +70,13 @@ export default class Model {
 				this.scale.y,
 				this.scale.z
 			)
+			if (this.rotation) {
+				this.meshes[`${this.name}`].rotation.set(
+					this.rotation.x,
+					this.rotation.y,
+					this.rotation.z
+				)
+			}
 			this.scene.add(this.meshes[`${this.name}`])
 		})
 	}
