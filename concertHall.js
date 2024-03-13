@@ -255,6 +255,7 @@ export const keyboard = () => {
         map: texture
     })
     const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.userData.name = 'target2'
     wallMesh.position.set(-65, -255, -8)
     wallMesh.rotation.set(0, 40, 0)
     return wallMesh
@@ -268,6 +269,7 @@ export const trumpet = () => {
         map: texture
     })
     const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.userData.name = 'target1'
     wallMesh.position.set(-125, -250, -12)
     wallMesh.rotation.set(0, -40, 0)
     return wallMesh

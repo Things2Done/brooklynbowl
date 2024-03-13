@@ -8,7 +8,9 @@ import {
     MeshPhongMaterial,
     AnimationMixer,
     MeshMatcapMaterial,
+    SphereGeometry,
 } from 'three'
+import * as THREE from 'three'
 // import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'
 // import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
@@ -16,6 +18,27 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 const loader = new TextureLoader()
 const modelLoader = new GLTFLoader()
 // const fontLoader = new FontLoader()
+
+export const sky = () => {
+    // const color = loader.load('Brick_Wall_019_basecolor.jpg')
+    // const normal = loader.load('Brick_Wall_019_normal.jpg')
+    // const roughness = loader.load('Brick_Wall_019_roughness.jpg')
+    // const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
+
+    const skyTexture = loader.load('./photos/sky.jpg')
+
+    const wall = new SphereGeometry(40,32,16,0,6.283185307179586,0,3.141592653589793)
+    const wallMaterial = new MeshPhysicalMaterial({
+        map: skyTexture,
+        // normalMap: normal,
+        // roughnessMap: roughness,
+        // aoMap: occ,
+        side: THREE.BackSide
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(-1, -1, -10)
+    return wallMesh
+}
 
 export const frontWall = () => {
     const color = loader.load('Brick_Wall_019_basecolor.jpg')
@@ -89,6 +112,30 @@ export const blackFrontWall = () => {
     return wallMesh
 }
 
+export const bkBrewery = () => {
+    const logo = loader.load('/photos/BkBrewery.jpg')
+
+
+    // const color = loader.load('Brick_Wall_011_COLOR.jpg')
+    // const displace = loader.load('Brick_Wall_011_DISP.png')
+    // const normal = loader.load('Brick_Wall_011_NORM.jpg')
+    // const roughness = loader.load('Brick_Wall_011_ROUGH.jpg')
+    // const occ = loader.load('Brick_Wall_011_OCC.jpg')
+
+    const wall = new BoxGeometry(15, 15, .5)
+    const wallMaterial = new MeshBasicMaterial({
+        map: logo
+        // map: color,
+        // displacementMap: displace,
+        // normalMap: normal,
+        // roughnessMap: roughness,
+        // aoMap: occ,
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(16, -1, .5)
+    return wallMesh
+}
+
 export const blackSideWall = () => {
     const color = loader.load('Brick_Wall_019_basecolor.jpg')
     const displace = loader.load('Brick_Wall_019_height.png')
@@ -113,6 +160,72 @@ export const blackSideWall = () => {
     })
     const wallMesh = new Mesh(wall, wallMaterial)
     wallMesh.position.set(3.75, -1, -8.5)
+    return wallMesh
+}
+
+export const blackMiniWall = () => {
+    const color = loader.load('Brick_Wall_019_basecolor.jpg')
+    const displace = loader.load('Brick_Wall_019_height.png')
+    const normal = loader.load('Brick_Wall_019_normal.jpg')
+    const roughness = loader.load('Brick_Wall_019_roughness.jpg')
+    const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
+
+    // const color = loader.load('Brick_Wall_011_COLOR.jpg')
+    // const displace = loader.load('Brick_Wall_011_DISP.png')
+    // const normal = loader.load('Brick_Wall_011_NORM.jpg')
+    // const roughness = loader.load('Brick_Wall_011_ROUGH.jpg')
+    // const occ = loader.load('Brick_Wall_011_OCC.jpg')
+
+    const wall = new BoxGeometry(.5, 4, 3)
+    const wallMaterial = new MeshPhysicalMaterial({
+        color: 0x000322
+        // map: color,
+        // displacementMap: displace,
+        // normalMap: normal,
+        // roughnessMap: roughness,
+        // aoMap: occ,
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(-9.8, -1, -2.5)
+    return wallMesh
+}
+
+export const sideDoor = () => {
+    // const color = loader.load('./Textures/ceiling/Tiles_011_COLOR.jpg')
+    // const displace = loader.load('./Textures/ceiling/Tiles_011_DISP.png')
+    // const normal = loader.load('./Textures/ceiling/Tiles_011_NORM.jpg')
+    // const roughness = loader.load('./Textures/ceiling/Tiles_011_ROUGH.jpg')
+    // const occ = loader.load('./Textures/ceiling/Tiles_011_OCC.jpg')
+
+    const wall = new BoxGeometry(15, 4, .5)
+    const wallMaterial = new MeshBasicMaterial({
+        // map: color,
+        // displacementMap: displace,
+        // normalMap: normal,
+        // roughnessMap: roughness,
+        // aoMap: occ,
+        color: 0x000000
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(-17, -1, -4.25)
+    return wallMesh
+}
+
+export const sideDoorTop = () => {
+    const color = loader.load('Brick_Wall_019_basecolor.jpg')
+    const normal = loader.load('Brick_Wall_019_normal.jpg')
+    const roughness = loader.load('Brick_Wall_019_roughness.jpg')
+    const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
+
+    const wall = new BoxGeometry(15, 1.5, .5)
+    const wallMaterial = new MeshPhysicalMaterial({
+        map: color,
+        normalMap: normal,
+        roughnessMap: roughness,
+        aoMap: occ,
+    })
+    const wallMesh = new Mesh(wall, wallMaterial)
+    wallMesh.position.set(-17, 1.8, -4.25)
     return wallMesh
 }
 

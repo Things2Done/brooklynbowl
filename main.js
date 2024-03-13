@@ -1,6 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
-import { frontWall, sideWall, blackFrontWall, blackSideWall, pillar, signVert, signHor, ground, entryGround, curtainModel, curtainModel2 } from './entrance'
+import { sky, bkBrewery, frontWall, sideWall, blackFrontWall, blackSideWall, sideDoor, sideDoorTop, blackMiniWall, pillar, signVert, signHor, ground, entryGround, curtainModel, curtainModel2 } from './entrance'
 import { addLight, ambientLight } from './addLights'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Model from './Model'
@@ -31,12 +31,16 @@ const scene = new THREE.Scene()
 const meshes = {}
 const lights = {}
 const mixers = []
+const raycaster = new THREE.Raycaster()
+const pointer = new THREE.Vector2()
+let soundPlaying = null ;
+
 
 //audio
 const listener = new THREE.AudioListener()
 camera.add(listener)
 const hartswickMusic = new THREE.PositionalAudio(listener)
-const sound2 = new THREE.PositionalAudio(listener)
+const test = new THREE.PositionalAudio(listener)
 const audioLoader = new THREE.AudioLoader()
 
 
@@ -56,15 +60,15 @@ function init() {
     console.log('failed to load model', error)
   })
 
-  // curtainModel2().then(({ scene: curtainScene2, mixer: curtainMixer2 }) => {
-  //   curtainScene2.position.set(2, -2, -8)
-  //   curtainScene2.scale.set(5, 1, 1.8)
-  //   curtainScene2.rotation.set(0, 30, 0)
-  //   scene.add(curtainScene2)
-  //   mixers.push(curtainMixer2)
-  // }).catch((error) => {
-  //   console.log('failed to load model', error)
-  // })
+  curtainModel2().then(({ scene: curtainScene2, mixer: curtainMixer2 }) => {
+    curtainScene2.position.set(2, -2, -11.5)
+    curtainScene2.scale.set(5, 1, 1.8)
+    curtainScene2.rotation.set(0, 30, 0)
+    scene.add(curtainScene2)
+    mixers.push(curtainMixer2)
+  }).catch((error) => {
+    console.log('failed to load model', error)
+  })
 
   const arm = new Model({
     scene: scene, meshes: meshes, name: 'arm', url: './models/arm/scene.gltf',
@@ -72,6 +76,7 @@ function init() {
     roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
     normalMap: './models/arm/textures/defaultMat_metallicRoughness.png',
     scale: new THREE.Vector3(.005, .005, .005),
+    rotation: new THREE.Vector3(.4, 4, 0)
   })
   arm.init()
   arm.position.set(1.5, -1, -14)
@@ -82,24 +87,22 @@ function init() {
     map: './models/stamp/textures/defaultMat_baseColor.png',
     roughnessMap: 'defaultMat_metallicRoughness.png',
     scale: new THREE.Vector3(.009, .009, .009),
-    PositionalAudio: hartswickMusic
+    rotation: new THREE.Vector3(0, .4, 0)
   })
-    stamp.init()
-  stamp.position.set(1.45, -0.3, -14)
+  stamp.init()
+  stamp.position.set(1.55, -0.3, -14)
+  // stamp.position.set(1.55, -.74, -14)
 
 
-  // const stageCurtain = new Model({
-  //   scene: scene, meshes: meshes, name: 'stageCurtain', url: './models/curtains.glb',
-  //   // map: './models/StageCurtain/textures/Material.001_baseColor.png',
-  //   // roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
-  //   scale: new THREE.Vector3(10, 10, 10),
-  //   // rotation:
-  //   })
-  // stageCurtain.init()
-
-  // stageCurtain.rotation.x = Math.PI/2
-  // stageCurtain.rotation.y = 0
-  // stageCurtain.rotation.z = 0
+  const stageCurtain = new Model({
+    scene: scene, meshes: meshes, name: 'stageCurtain', url: './models/curtains.glb',
+    // map: './models/StageCurtain/textures/Material.001_baseColor.png',
+    // roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
+    scale: new THREE.Vector3(10, 10, 10),
+    // rotation:
+  })
+  stageCurtain.init()
+  stageCurtain.position.set(90, -250, -70)
 
 
   // const bowling = new Model({
@@ -206,13 +209,18 @@ function init() {
     // roughnessMap: './models/bar/textures/Metal035_2K_Color_metallicRoughness.png',
     // normalMap: './models/bar/textures/Metal035_2K_Color_normal.png',
     scale: new THREE.Vector3(5, 5, 5),
-    rotation: new THREE.Vector3(0, Math.PI *-.6, 0),
+    rotation: new THREE.Vector3(0, Math.PI * -.6, 0),
   })
   speaker2.init()
   speaker2.position.set(-45, -255, -45)
 
+  meshes.sky = sky()
   meshes.frontWall = frontWall()
+  meshes.bkBrewery = bkBrewery()
   meshes.sideWall = sideWall()
+  meshes.blackMiniWall = blackMiniWall()
+  meshes.sideDoor = sideDoor()
+  meshes.sideDoorTop = sideDoorTop()
   meshes.blackFrontWall = blackFrontWall()
   meshes.blackSideWall = blackSideWall()
   meshes.pillar = pillar()
@@ -242,12 +250,18 @@ function init() {
 
 
   meshes.trumpet.add(hartswickMusic)
-
+  meshes.keyboard.add(test)
+  // meshes.entryGround.add(hartswickMusic)
 
   scene.add(lights.default)
   scene.add(lights.ambientLight)
   scene.add(meshes.pillar)
+  scene.add(meshes.sky)
+  scene.add(meshes.bkBrewery)
   scene.add(meshes.frontWall)
+  scene.add(meshes.sideDoor)
+  scene.add(meshes.sideDoorTop)
+  scene.add(meshes.blackMiniWall)
   scene.add(meshes.blackFrontWall)
   scene.add(meshes.blackSideWall)
   scene.add(meshes.signHor)
@@ -274,17 +288,21 @@ function init() {
   scene.add(meshes.keyboard)
   scene.add(meshes.trumpet)
 
-  window.addEventListener('click', () => {
-    hartswickMusic.play()
-  })
+  // window.addEventListener('click', () => {
+  //   hartswickMusic.play()
+  // })
 
-  controls.target.set(2, 0, -10)
-  camera.position.set(1.5, 0, -9)
+  // camera.position.set(2.5, .3, -13)
+  // controls.target.set(1.5, 0, -14)
+  console.log(camera.position)
   // camera.position.set(1.5, 0, 15)
   // camera.position.set(-100, -250, 55)
   // controls.target.set(-100, -250, 0)
   // instances()
 
+
+  camera.position.set(1.5, 0, 10)
+  controls.target.set(5, 0, -1)
   let counter = 0
   let target = new THREE.Vector3()
   const wheelAdaptor = new WheelAdaptor({ type: 'discrete' })
@@ -309,12 +327,27 @@ function init() {
 
     } else if (counter == 2) {
       gsap.to(camera.position, {
-        z: -4,
+        x: 1.9, y:0, z: -12,
+        duration: 3,
+        ease: 'power1.inOut',
+      })
+      gsap.to(target, {
+        x: 1.5, y: 0, z: -15,
+        duration: 1.2,
+        ease: 'power1.inOut',
+        onComplete: () => {
+          camera.lookAt(target)
+          controls.target.copy(target)
+        },
+      })
+  } else if (counter == 3) {
+      gsap.to(camera.position, {
+        x:2.5, y:.3, z: -13,
         duration: 3,
         ease: 'power1.inOut',
       }),
         gsap.to(target, {
-          x: 0, y: 0, z: -10,
+          x: 1.5, y: 0, z: -14,
           duration: 1.2,
           ease: 'power1.inOut',
           onComplete: () => {
@@ -323,13 +356,18 @@ function init() {
           },
         })
         gsap.to(meshes.stamp.position, {
-          x: 0, y: -10.2, z: 0,
+          x: 1.55, y: -0.74, z: -14,
           duration: 3,
           ease: 'power1.inOut',
-          onComplete: () =>{
-            console.log(meshes.stamp.position)
-          }
+          delay: 2,
+          onComplete: () => {
+            gsap.to(meshes.stamp.position, {
+              x: 1.55, y: -0.3, z: -14,
+              duration: 3,
+              ease: 'power1.inOut',
+            })    },
         })  
+      
     }
     else if (counter == 4) {
       const cover = document.querySelector('.cover')
@@ -377,11 +415,12 @@ function init() {
   fonts()
   initAudio()
   resize()
+  raycast()
   animate()
 }
 
 function initAudio() {
-  audioLoader.load('./sound/test.mp4', function (buffer) {
+  audioLoader.load('./sound/trumpetTest.mp4', function (buffer) {
     hartswickMusic.setBuffer(buffer)
     hartswickMusic.setRefDistance(30)
     hartswickMusic.setRolloffFactor(5)
@@ -389,13 +428,13 @@ function initAudio() {
     hartswickMusic.setDistanceModel('exponential')
   })
 
-  // audioLoader.load('./sound/hartswickMusic.mp4', function (buffer) {
-  //   hartswickMusic.setBuffer(buffer)
-  //   hartswickMusic.setRefDistance(300)
-  //   hartswickMusic.setRolloffFactor(5)
-  //   hartswickMusic.setMaxDistance(20)
-  //   hartswickMusic.setDistanceModel('exponential')
-  // })
+  audioLoader.load('./sound/test.mp4', function (buffer) {
+    test.setBuffer(buffer)
+    test.setRefDistance(300)
+    test.setRolloffFactor(5)
+    test.setMaxDistance(20)
+    test.setDistanceModel('exponential')
+  })
 
 }
 
@@ -460,6 +499,58 @@ async function createVerticalText() {
     }
   })
 }
+
+function raycast(){
+  window.addEventListener('click', (event) => {
+    pointer.x = (event.clientX / window.innerWidth) * 2 - 1
+		pointer.y = -(event.clientY / window.innerHeight) * 2 + 1
+		raycaster.setFromCamera(pointer, camera)
+		const intersects = raycaster.intersectObjects(scene.children)
+		for (let i = 0; i < intersects.length; i++) {
+			if (intersects[i].object.userData.name == 'target1') {
+				gsap.to(intersects[i].object.scale, {
+					x: 2,
+					y: 2,
+					z: 2,
+					duration: 2,
+					ease: 'power3.inOut',
+				})
+        intersects[i].object.traverse((child) => {
+          if (child instanceof THREE.PositionalAudio){
+            if (soundPlaying && soundPlaying.isPlaying){
+              soundPlaying.stop();
+            }
+          if(!child.isPlaying){
+            child.play()
+            soundPlaying = child
+          }
+        }
+      })
+    }
+    if (intersects[i].object.userData.name == 'target2') {
+      gsap.to(intersects[i].object.scale, {
+        x: 0.5,
+        y: 0.5,
+        z: 0.5,
+        duration: 2,
+        ease: 'power3.inOut',
+      })
+      intersects[i].object.traverse((child) => {
+        if (child instanceof THREE.PositionalAudio){
+          if (soundPlaying && soundPlaying.isPlaying){
+            soundPlaying.stop();
+          }
+        if(!child.isPlaying){
+          child.play()
+          soundPlaying = child
+        }
+      }
+    })
+    }
+  }
+});
+}
+
 
 function resize() {
   window.addEventListener('resize', () => {
