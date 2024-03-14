@@ -178,7 +178,7 @@ export const backWall = () => {
         aoMap: occ,
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(0,-230,210)
+    wallMesh.position.set(0, -230, 210)
     return wallMesh
 }
 
@@ -217,7 +217,7 @@ export const discoBall = () => {
         aoMap: occ,
     })
     const wallMesh = new Mesh(wall, wallMaterial)
-    wallMesh.position.set(-100, -170, 50)
+    wallMesh.position.set(-100, -170, 15)
     return wallMesh
 }
 
@@ -264,13 +264,168 @@ export const keyboard = () => {
 export const trumpet = () => {
     const texture = loader.load('./photos/trumpet1.jpg')
 
-    const wall = new BoxGeometry(25, 20, 20)
+    const wall = new BoxGeometry(15, 20, 10)
     const wallMaterial = new MeshBasicMaterial({
         map: texture
     })
     const wallMesh = new Mesh(wall, wallMaterial)
     wallMesh.userData.name = 'target1'
-    wallMesh.position.set(-125, -250, -12)
+    wallMesh.position.set(-135, -250, -4)
     wallMesh.rotation.set(0, -40, 0)
     return wallMesh
+}
+
+export const oteil = () => {
+
+    const boxMaterial = [
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Oteil.png')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Oteil.png')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Oteil2.png')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Oteil2.png')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Oteil2.png')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Oteil2.png')
+        }),
+    ]
+    const box = new BoxGeometry(15, 30, 10)
+
+    const boxMesh = new Mesh(box, boxMaterial)
+    boxMesh.userData.name = 'target2'
+    boxMesh.position.set(-60, -240, -2)
+    boxMesh.rotation.set(0, -40, 0)
+    return (boxMesh)
+}
+
+export const beatsAntique = () => {
+
+    const boxMaterial = [
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Beats2.jpeg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Beats2.jpeg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Beats1.jpeg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Beats1.jpeg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Beats1.jpeg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/Beats1.jpeg')
+        }),
+    ]
+    const box = new BoxGeometry(15, 15, 10)
+
+    const boxMesh = new Mesh(box, boxMaterial)
+    boxMesh.userData.name = 'target3'
+    boxMesh.position.set(-80, -250, -5)
+    boxMesh.rotation.set(0, -40, 0)
+    return (boxMesh)
+}
+
+export const rebirth = () => {
+
+    const boxMaterial = [
+        new MeshBasicMaterial({
+            map: loader.load('/photos/rebirth2.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/rebirth4.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/rebirth3.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/rebirth3.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/rebirth1.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/rebirth3.jpg')
+        }),
+    ]
+    const box = new BoxGeometry(15, 25, 10)
+
+    const boxMesh = new Mesh(box, boxMaterial)
+    boxMesh.userData.name = 'target4'
+    boxMesh.position.set(-100, -260, -15)
+    boxMesh.rotation.set(0, 40, 0)
+    return (boxMesh)
+}
+
+export const bigFreeda = () => {
+
+    const boxMaterial = [
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigFreeda4.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigFreeda4.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigFreeda1.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigFreeda1.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigFreeda4.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigFreeda4.jpg')
+        }),
+    ]
+    const box = new BoxGeometry(95, 70, 25)
+
+    const boxMesh = new Mesh(box, boxMaterial)
+    // boxMesh.userData.name = 'target5'
+    boxMesh.position.set(-100, -220, -65)
+    boxMesh.rotation.set(0, 0, 0)
+    return (boxMesh)
+}
+
+export const bigBoi = () => {
+
+    const boxMaterial = [
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigBoi2.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigBoi2.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigBoi1.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigBoi1.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigBoi2.jpg')
+        }),
+        new MeshBasicMaterial({
+            map: loader.load('/photos/BigBoi2.jpg')
+        }),
+    ]
+    const box = new BoxGeometry(15, 25, 20)
+
+    const boxMesh = new Mesh(box, boxMaterial)
+    // boxMesh.userData.name = 'target6'
+    boxMesh.position.set(-120, -245, -15)
+    boxMesh.rotation.set(0, -40, 0)
+    return (boxMesh)
 }

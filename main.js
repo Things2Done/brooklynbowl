@@ -4,7 +4,7 @@ import { sky, bkBrewery, frontWall, sideWall, blackFrontWall, blackSideWall, sid
 import { addLight, ambientLight } from './addLights'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Model from './Model'
-import { danceFloor, stageFloor, stageLip, stageSide, stageSide2, ceiling, backStage, backWall, farWall, discoBall, drummer, guitar, keyboard, trumpet } from './concertHall'
+import { danceFloor, stageFloor, stageLip, stageSide, stageSide2, ceiling, backStage, backWall, farWall, discoBall, drummer, guitar, oteil, trumpet, beatsAntique, rebirth, bigFreeda, bigBoi  } from './concertHall'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 import { WheelAdaptor } from 'three-story-controls'
@@ -40,7 +40,12 @@ let soundPlaying = null ;
 const listener = new THREE.AudioListener()
 camera.add(listener)
 const hartswickMusic = new THREE.PositionalAudio(listener)
-const test = new THREE.PositionalAudio(listener)
+const oteilMusic = new THREE.PositionalAudio(listener)
+const beatsAntiqueMusic = new THREE.PositionalAudio(listener)
+const rebirthMusic = new THREE.PositionalAudio(listener)
+const bigFreedaMusic = new THREE.PositionalAudio(listener)
+const bigBoiMusic = new THREE.PositionalAudio(listener)
+const gratefulDeadMusic = new THREE.PositionalAudio(listener)
 const audioLoader = new THREE.AudioLoader()
 
 
@@ -98,11 +103,11 @@ function init() {
     scene: scene, meshes: meshes, name: 'stageCurtain', url: './models/curtains.glb',
     // map: './models/StageCurtain/textures/Material.001_baseColor.png',
     // roughnessMap: './models/arm/textures/material_0_metallicRoughness.png',
-    scale: new THREE.Vector3(10, 10, 10),
-    // rotation:
+    scale: new THREE.Vector3(25, 30, 70),
+    rotation: new THREE.Vector3(0, Math.PI*.5 , 0)
   })
   stageCurtain.init()
-  stageCurtain.position.set(90, -250, -70)
+  stageCurtain.position.set(-85, -255, -90)
 
 
   // const bowling = new Model({
@@ -190,8 +195,8 @@ function init() {
     rotation: new THREE.Vector3(0, Math.PI, 0),
   })
   dancers.init()
-  dancers.position.set(-100, -280, 100)
-
+  dancers.position.set(-60, -280, 20)
+  
   const speaker = new Model({
     scene: scene, meshes: meshes, name: 'speaker', url: './models/speaker/scene.gltf',
     map: '.\models\speaker\textures\Rubber_baseColor.png',
@@ -234,7 +239,12 @@ function init() {
   meshes.stageLip = stageLip()
   meshes.drummer = drummer()
   meshes.guitar = guitar()
-  meshes.keyboard = keyboard()
+  meshes.oteil = oteil()
+  meshes.beatsAntique = beatsAntique()
+  meshes.rebirth = rebirth()
+  meshes.bigFreeda = bigFreeda()
+  meshes.bigBoi= bigBoi()
+
   meshes.trumpet = trumpet()
   meshes.stageSide = stageSide()
   meshes.stageSide2 = stageSide2()
@@ -245,13 +255,18 @@ function init() {
   meshes.discoBall = discoBall()
 
 
-  lights.default = addLight()
+  // lights.default = addLight()
   lights.ambientLight = ambientLight()
 
 
   meshes.trumpet.add(hartswickMusic)
-  meshes.keyboard.add(test)
-  // meshes.entryGround.add(hartswickMusic)
+  meshes.oteil.add(oteilMusic)
+  meshes.beatsAntique.add(beatsAntiqueMusic)
+  meshes.rebirth.add(rebirthMusic)
+  meshes.bigFreeda.add(bigFreedaMusic)
+  meshes.bigBoi.add(bigBoiMusic)
+  meshes.entryGround.add(gratefulDeadMusic)
+  
 
   scene.add(lights.default)
   scene.add(lights.ambientLight)
@@ -282,21 +297,23 @@ function init() {
   scene.add(meshes.backStage)
   scene.add(meshes.discoBall)
 
-
-  scene.add(meshes.drummer)
-  scene.add(meshes.guitar)
-  scene.add(meshes.keyboard)
+  scene.add(meshes.bigFreeda)
+  scene.add(meshes.bigBoi)
+  scene.add(meshes.rebirth)
+  // scene.add(meshes.drummer)
+  // scene.add(meshes.guitar)
+  scene.add(meshes.oteil)
+  scene.add(meshes.beatsAntique)
   scene.add(meshes.trumpet)
 
-  // window.addEventListener('click', () => {
-  //   hartswickMusic.play()
-  // })
+  window.addEventListener('click', () => {
+    gratefulDeadMusic.play()
+  })
 
   // camera.position.set(2.5, .3, -13)
   // controls.target.set(1.5, 0, -14)
-  console.log(camera.position)
   // camera.position.set(1.5, 0, 15)
-  // camera.position.set(-100, -250, 55)
+  // camera.position.set(-100, -250, 60)
   // controls.target.set(-100, -250, 0)
   // instances()
 
@@ -380,7 +397,7 @@ function init() {
       gsap.to(camera.position, {
         x: -100,
         y: -250,
-        z: 55,
+        z: 125,
         delay: 2,
       })
       gsap.to(target, {
@@ -420,7 +437,7 @@ function init() {
 }
 
 function initAudio() {
-  audioLoader.load('./sound/trumpetTest.mp4', function (buffer) {
+  audioLoader.load('./sound/hartswickMP3.mp3', function (buffer) {
     hartswickMusic.setBuffer(buffer)
     hartswickMusic.setRefDistance(30)
     hartswickMusic.setRolloffFactor(5)
@@ -428,14 +445,54 @@ function initAudio() {
     hartswickMusic.setDistanceModel('exponential')
   })
 
-  audioLoader.load('./sound/test.mp4', function (buffer) {
-    test.setBuffer(buffer)
-    test.setRefDistance(300)
-    test.setRolloffFactor(5)
-    test.setMaxDistance(20)
-    test.setDistanceModel('exponential')
+  audioLoader.load('./sound/oteilMP3.mp3', function (buffer) {
+    oteilMusic.setBuffer(buffer)
+    oteilMusic.setRefDistance(300)
+    oteilMusic.setRolloffFactor(5)
+    oteilMusic.setMaxDistance(20)
+    oteilMusic.setDistanceModel('exponential')
   })
 
+  audioLoader.load('./sound/beatsAntiqueMP3.mp3', function (buffer) {
+    beatsAntiqueMusic.setBuffer(buffer)
+    beatsAntiqueMusic.setRefDistance(300)
+    beatsAntiqueMusic.setRolloffFactor(5)
+    beatsAntiqueMusic.setMaxDistance(20)
+    beatsAntiqueMusic.setDistanceModel('exponential')
+  })
+
+  audioLoader.load('./sound/rebirthMP3.mp3', function (buffer) {
+    rebirthMusic.setBuffer(buffer)
+    rebirthMusic.setRefDistance(300)
+    rebirthMusic.setRolloffFactor(5)
+    rebirthMusic.setMaxDistance(20)
+    rebirthMusic.setDistanceModel('exponential')
+  })
+
+  // audioLoader.load('./sound/bigFreedaMP3.mp3', function (buffer) {
+  //   bigFreedaMusic.setBuffer(buffer)
+  //   bigFreedaMusic.setRefDistance(300)
+  //   bigFreedaMusic.setRolloffFactor(5)
+  //   bigFreedaMusic.setMaxDistance(20)
+  //   bigFreedaMusic.setDistanceModel('exponential')
+  // })
+
+  // audioLoader.load('./sound/bigBoiMP3.mp3', function (buffer) {
+  //   bigBoiMusic.setBuffer(buffer)
+  //   bigBoiMusic.setRefDistance(300)
+  //   bigBoiMusic.setRolloffFactor(5)
+  //   bigBoiMusic.setMaxDistance(20)
+  //   bigBoiMusic.setDistanceModel('exponential')
+  // })
+
+  audioLoader.load('./sound/gratefulDeadMP3.mp3', function (buffer) {
+    gratefulDeadMusic.setBuffer(buffer)
+    gratefulDeadMusic.setRefDistance(15)
+    gratefulDeadMusic.setRolloffFactor(15)
+    gratefulDeadMusic.setMaxDistance(20)
+    gratefulDeadMusic.setDistanceModel('exponential')
+    gratefulDeadMusic.setVolume(.05)
+  })
 }
 
 function fonts() {
@@ -514,7 +571,17 @@ function raycast(){
 					z: 2,
 					duration: 2,
 					ease: 'power3.inOut',
-				})
+          onComplete: () => {
+            gsap.to(intersects[i].object.scale, {
+                x: 1, 
+                y: 1,
+                z: 1,
+                duration: 2, 
+                ease: 'power3.inOut',
+                delay: 5, 
+            });
+        } 
+        })
         intersects[i].object.traverse((child) => {
           if (child instanceof THREE.PositionalAudio){
             if (soundPlaying && soundPlaying.isPlaying){
@@ -529,11 +596,141 @@ function raycast(){
     }
     if (intersects[i].object.userData.name == 'target2') {
       gsap.to(intersects[i].object.scale, {
+        x: 2,
+        y: 2,
+        z: 2,
+        duration: 2,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          gsap.to(intersects[i].object.scale, {
+              x: 1, 
+              y: 1,
+              z: 1,
+              duration: 2, 
+              ease: 'power3.inOut',
+              delay: 5, 
+          });
+      }
+      })
+      intersects[i].object.traverse((child) => {
+        if (child instanceof THREE.PositionalAudio){
+          if (soundPlaying && soundPlaying.isPlaying){
+            soundPlaying.stop();
+          }
+        if(!child.isPlaying){
+          child.play()
+          soundPlaying = child
+        }
+      }
+    })
+    }
+    if (intersects[i].object.userData.name == 'target3') {
+      gsap.to(intersects[i].object.scale, {
+        x: 2,
+        y: 2,
+        z: 2,
+        duration: 2,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          gsap.to(intersects[i].object.scale, {
+              x: 1, 
+              y: 1,
+              z: 1,
+              duration: 2, 
+              ease: 'power3.inOut',
+              delay: 5, 
+          });
+      }
+      })
+      intersects[i].object.traverse((child) => {
+        if (child instanceof THREE.PositionalAudio){
+          if (soundPlaying && soundPlaying.isPlaying){
+            soundPlaying.stop();
+          }
+        if(!child.isPlaying){
+          child.play()
+          soundPlaying = child
+        }
+      }
+    })
+    }
+    if (intersects[i].object.userData.name == 'target4') {
+      gsap.to(intersects[i].object.scale, {
+        x: 2,
+        y: 2,
+        z: 2,
+        duration: 2,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          gsap.to(intersects[i].object.scale, {
+              x: 1, 
+              y: 1,
+              z: 1,
+              duration: 2, 
+              ease: 'power3.inOut',
+              delay: 5, 
+          });
+      }
+      })
+      intersects[i].object.traverse((child) => {
+        if (child instanceof THREE.PositionalAudio){
+          if (soundPlaying && soundPlaying.isPlaying){
+            soundPlaying.stop();
+          }
+        if(!child.isPlaying){
+          child.play()
+          soundPlaying = child
+        }
+      }
+    })
+    }
+    if (intersects[i].object.userData.name == 'target5') {
+      gsap.to(intersects[i].object.scale, {
+        x: 2,
+        y: 2,
+        z: 2,
+        duration: 2,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          gsap.to(intersects[i].object.scale, {
+              x: 1, 
+              y: 1,
+              z: 1,
+              duration: 2, 
+              ease: 'power3.inOut',
+              delay: 5, 
+          });
+      }
+      })
+      intersects[i].object.traverse((child) => {
+        if (child instanceof THREE.PositionalAudio){
+          if (soundPlaying && soundPlaying.isPlaying){
+            soundPlaying.stop();
+          }
+        if(!child.isPlaying){
+          child.play()
+          soundPlaying = child
+        }
+      }
+    })
+    }
+    if (intersects[i].object.userData.name == 'target6') {
+      gsap.to(intersects[i].object.scale, {
         x: 0.5,
         y: 0.5,
         z: 0.5,
         duration: 2,
         ease: 'power3.inOut',
+        onComplete: () => {
+          gsap.to(intersects[i].object.scale, {
+              x: 1, 
+              y: 1,
+              z: 1,
+              duration: 2, 
+              ease: 'power3.inOut',
+              delay: 5, 
+          });
+      }
       })
       intersects[i].object.traverse((child) => {
         if (child instanceof THREE.PositionalAudio){
@@ -574,8 +771,14 @@ function animate() {
   // meshes.pillar.rotation.z += 0.04
   meshes.drummer
   meshes.guitar
-  meshes.keyboard
+  meshes.oteil
   meshes.trumpet.rotation.y += 0.009
+  meshes.oteil.rotation.y += 0.009
+  meshes.rebirth.rotation.y += 0.009
+  meshes.beatsAntique.rotation.y += 0.009
+  meshes.bigBoi.rotation.y += 0.009
+  // meshes.bigFreeda.rotation.x += 0.009
+
   // meshes.trumpet.rotation.x += 0.009
   meshes.discoBall.rotation.y += 0.009
 

@@ -20,11 +20,6 @@ const modelLoader = new GLTFLoader()
 // const fontLoader = new FontLoader()
 
 export const sky = () => {
-    // const color = loader.load('Brick_Wall_019_basecolor.jpg')
-    // const normal = loader.load('Brick_Wall_019_normal.jpg')
-    // const roughness = loader.load('Brick_Wall_019_roughness.jpg')
-    // const occ = loader.load('Brick_Wall_019_ambientOcclusion.jpg')
-
     const skyTexture = loader.load('./photos/sky.jpg')
 
     const wall = new SphereGeometry(40,32,16,0,6.283185307179586,0,3.141592653589793)

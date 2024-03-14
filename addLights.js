@@ -7,7 +7,7 @@ export const addLight = () => {
 }
 
 export const ambientLight = () => {
-    let light = new AmbientLight(0xffffff, 1)
+    let light = new AmbientLight(0xffffff, .4)
     light.position.set(-5, 3, 0)
     return light
 }
